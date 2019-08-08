@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+	</head>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<body>
+		<ol id="app">
+			<!-- 使用props绑定Vue实例data与Vue组件 -->
+			<item-em-a v-bind:todo="items" v-for="items in list"></item-em-a>
+			<aaa post='我是谁'></aaa>
+		</ol>
+		<!-- <div id="app1">{{ a }}</div> -->
+		<div id="app2">
+			<person></person>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//注册一个组件
+		Vue.component('ItemEmA',{
+			props:['todo'],
+			template:'<li>{{ todo.text }}</li>'
+		})
+		Vue.component('aaa',{
+			props:['post'],
+			template:'<h3>{{ post }}</h3>'
+		})
+		//Vue实例
+		var apps = new Vue({
+			el: '#app',
+			data: {
+				list:[{text:'111'},{text:'222'},{text:'333'}]
+			}
+		})
+		var obj = {
+			a : 'data1'
+		}
+		// 这个方法可以阻止Vue实例改变obj对象里的a值
+		Object.freeze(obj);
+		// var vms = new Vue({
+		// 	el: '#app1',
+		// 	data:obj
+		// })
+		var personChild = {
+			template: '<span>1111111</span>'
+		}
+		var person = {
+			template:'<p>sdasdsd<person-child></person-child></p>',
+			components: {
+				'person-child': personChild
+			}
+		}
+		var app2 = new Vue({
+			el: '#app2',
+			data () {
+				return {
+					name: '高键',
+					sex: '男',
+					age: '25'
+				}
+			},
+			components: {
+				'person':person
+			}
+		})
+	</script>
+</html>
